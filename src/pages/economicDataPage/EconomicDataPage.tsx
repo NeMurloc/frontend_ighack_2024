@@ -1,11 +1,13 @@
 // import MTSFinancialCharts from '@/components/economicDataPage/MTSFinancialCharts';
+import { observer } from 'mobx-react-lite';
 import DataItem from '../../components/economicDataPage/dataItem/DataItem';
 import MTSFinancialCharts from '../../components/economicDataPage/MTSFinancialCharts';
 import economicStore from '../../store/economicStore';
 import cl from './EconomicDataPage.module.css'
 import { useNavigate } from 'react-router-dom';
+import testData from '../../testData.json'
 
-const EconomicDataPage: React.FC = () => {
+const EconomicDataPage: React.FC = observer(() => {
     const navigate = useNavigate();
 
     return (
@@ -16,11 +18,12 @@ const EconomicDataPage: React.FC = () => {
 
             {/* <MTSFinancialCharts/> */}
             <div className={cl.dataContainer}> 
-                <DataItem data={economicStore.economicData}/>
+                {/* <DataItem data={economicStore.economicData}/> */}
+                <DataItem data={testData}/>
             </div>
 
         </div>
     )
-}
+})
 
 export default EconomicDataPage

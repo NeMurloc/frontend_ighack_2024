@@ -6,7 +6,7 @@ import MessageItem from './messageItem/MessageItem';
 const Messages: React.FC = observer(() => {
     
     return (
-        <div className={cl.container}>
+        <>
             {chatStore.messages.length === 0 ? (
                 <div className={cl.emptyMessageContainer}>
                     <div className={cl.emptyMessage}>
@@ -25,7 +25,7 @@ const Messages: React.FC = observer(() => {
                     ))}                    
                 </div>
             )}
-        </div>
+        </>
     );
 });
 

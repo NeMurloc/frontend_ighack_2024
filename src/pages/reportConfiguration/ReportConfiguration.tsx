@@ -30,6 +30,10 @@ interface ReportData {
 const ReportConfiguration: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
+    function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     const navigate = useNavigate();
 
     const handleSendRequestClick = async () => {
@@ -53,47 +57,59 @@ const ReportConfiguration: React.FC = () => {
             financialResultsReport: checkboxStore.financialResultsReport,
             statementOfChangesInEquity: checkboxStore.statementOfChangesInEquity
         };
-
-        // try {
-        //     setLoading(true);
-        //     const results = await processFinancialReports(variables, dataWithTemplateOfPrompts);
-        //     console.log(results);
-        //     for (const [key, value] of Object.entries(results)) {
-        //         const wasChatOpen = chatStore.isOpen; // Track if chat was open
-
-        //         testData.prompt = value + 'ВАЖНО! ЭТО ТЕСТОВЫЙ ЗАПРОС, ПОЭТОМУ ПРИДУМАЙ СВОИ ДАННЫЕ ДЛЯ МЕТРИК И ГРАФИКОВ!';
-        //         try {
-        //             const response = await axios.post('https://mts-aidocprocessing-case.olymp.innopolis.university/generate', testData);
-        //             console.log(`Response for ${key}:`, response.data);
-        //             economicStore.addLiquidityData(response.data);
-        //         } catch (error) {
-        //             console.error(`Error sending request for ${key}:`, error);
-        //         } finally {
-        //             if (wasChatOpen) {
-        //                 chatStore.handleOpenChat(); // Re-open the chat if it was open initially
-        //             }
-        //         }
-        //     }
-
-        //     // Reset loading state after all requests are completed
-        //     setLoading(false);
-        // } catch (error) {
-        //     console.error('Error processing financial reports:', error);
-        // }
+        setLoading(true);
+        await delay(14000);
+        navigate('/economicData');
 
         try {
-            const response = await axios.post('https://mts-aidocprocessing-case.olymp.innopolis.university/generate', testData);
-            console.log(`Response for:`, response.data);
-            economicStore.addLiquidityData(response.data);
-        } catch (error) {
-            console.error("Error sending request:", error);
-        } finally {
-            setLoading(false);
-            if (wasChatOpen) {
-                chatStore.handleOpenChat();
+            const results = await processFinancialReports(variables, dataWithTemplateOfPrompts);
+            console.log(results);
+            const finalMilvus = results.finalMilvus;
+            delete results.finalMilvus;
+
+            let isFirstIteration = true;
+            for (const [key, value] of Object.entries(results)) {
+                const wasChatOpen = chatStore.isOpen;
+
+
+
+                try {
+                    const payload = {
+                        prompt: value,
+                        milvus_prompt: finalMilvus,
+                    };
+
+                    const response = await axios.post('http://192.168.88.223/report', payload);
+                    console.log(`Response for ${key}:`, response.data);
+                    economicStore.addLiquidityData(response.data);
+                    if (isFirstIteration) {
+                        // navigate('/economicData');
+                        isFirstIteration = false;
+                    }
+                } catch (error) {
+                    console.error(`Error sending request for ${key}:`, error);
+                } finally {
+                    if (wasChatOpen) {
+                        chatStore.handleOpenChat();
+                    }
+                }
             }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error processing financial reports:', error);
         }
-        navigate('/economicData');
+
+        // try {
+        //     const response = await axios.post('/api/report', data);
+        //     console.log("Response:", response.data);
+        // } catch (error) {
+        //     console.error("Error sending request:", error);
+        // } finally {
+        //     setLoading(false);
+        //     if (wasChatOpen) {
+        //         chatStore.handleOpenChat();
+        //     }
+        // }
     }
 
     return (

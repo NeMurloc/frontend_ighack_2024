@@ -31,6 +31,8 @@ interface Data {
     financialResultsReport_Q: string;
     statementOfChangesInEquity: string;
     statementOfChangesInEquity_Q: string;
+    milvus: string;
+    milvus_Q: string;
 }
 
 // Functions
@@ -99,6 +101,17 @@ export async function processFinancialReports(variables: Variables, data: Data):
     const QEndConst = romanToQ(variables.endQuarterStr);
     
     const results: {[key: string]: string} = {};
+
+    results.finalMilvus = replaceStrings(
+        startQuarterStr,
+        endQuarterStr,
+        startYear,
+        endYear,
+        QStartConst,
+        QEndConst,
+        data.milvus,
+        data.milvus_Q
+    );
     
     // Process each report type if enabled
     if (variables.incomeExpenses) {
@@ -112,6 +125,8 @@ export async function processFinancialReports(variables: Variables, data: Data):
             data.incomeExpenses,
             data.incomeExpenses_Q
         );
+
+
     }
     
     if (variables.liquidity) {

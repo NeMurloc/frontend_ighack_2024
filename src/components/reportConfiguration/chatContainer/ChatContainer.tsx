@@ -3,6 +3,7 @@ import cl from './ChatContainer.module.css'
 import { useState, useRef } from 'react';
 import chatStore from '../../../store/chatStore';
 import Messages from './messages/Messages';
+import axios from 'axios';
 
 // interface ChatContainerProps {
 //     isOpen: boolean;
@@ -22,14 +23,32 @@ const ChatContainer: React.FC = observer(() => {
         // }
     };
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         if (value.trim()) {
+            // Add user message to chatStore
             chatStore.addMessage(value);
+
+            // Clear input and reset textarea height
             setValue('');
             if (textAreaRef.current) {
                 textAreaRef.current.style.height = 'auto';
             }
-            // post request
+
+            try {
+                const payload = {
+                    prompt: `Найди все данные, которые отвечают на этот вопрос: ${value}`,
+                    milvus_prompt: `Ответь на данный вопрос - ${value}, используя следующие данные`
+                };
+                // POST request with the user message
+                const response = await axios.post('/api/sendMessage', payload);
+
+                // Add server response to chatStore
+                if (response.data && response.data.reply) {
+                    chatStore.addResponse(response.data.reply);
+                }
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
     };
 
