@@ -54,48 +54,46 @@ const ReportConfiguration: React.FC = () => {
             statementOfChangesInEquity: checkboxStore.statementOfChangesInEquity
         };
 
+        // try {
+        //     setLoading(true);
+        //     const results = await processFinancialReports(variables, dataWithTemplateOfPrompts);
+        //     console.log(results);
+        //     for (const [key, value] of Object.entries(results)) {
+        //         const wasChatOpen = chatStore.isOpen; // Track if chat was open
+
+        //         testData.prompt = value + 'ВАЖНО! ЭТО ТЕСТОВЫЙ ЗАПРОС, ПОЭТОМУ ПРИДУМАЙ СВОИ ДАННЫЕ ДЛЯ МЕТРИК И ГРАФИКОВ!';
+        //         try {
+        //             const response = await axios.post('https://mts-aidocprocessing-case.olymp.innopolis.university/generate', testData);
+        //             console.log(`Response for ${key}:`, response.data);
+        //             economicStore.addLiquidityData(response.data);
+        //         } catch (error) {
+        //             console.error(`Error sending request for ${key}:`, error);
+        //         } finally {
+        //             if (wasChatOpen) {
+        //                 chatStore.handleOpenChat(); // Re-open the chat if it was open initially
+        //             }
+        //         }
+        //     }
+
+        //     // Reset loading state after all requests are completed
+        //     setLoading(false);
+        // } catch (error) {
+        //     console.error('Error processing financial reports:', error);
+        // }
+
         try {
-            setLoading(true);
-            const results = await processFinancialReports(variables, dataWithTemplateOfPrompts);
-            console.log(results);
-            for (const [key, value] of Object.entries(results)) {
-                const wasChatOpen = chatStore.isOpen; // Track if chat was open
-
-                testData.prompt = value + 'ВАЖНО! ЭТО ТЕСТОВЫЙ ЗАПРОС, ПОЭТОМУ ПРИДУМАЙ СВОИ ДАННЫЕ ДЛЯ МЕТРИК И ГРАФИКОВ!';
-                try {
-                    const response = await axios.post('https://mts-aidocprocessing-case.olymp.innopolis.university/generate', testData);
-                    console.log(`Response for ${key}:`, response.data);
-                    economicStore.addLiquidityData(response.data);
-                } catch (error) {
-                    console.error(`Error sending request for ${key}:`, error);
-                } finally {
-                    if (wasChatOpen) {
-                        chatStore.handleOpenChat(); // Re-open the chat if it was open initially
-                    }
-                }
-            }
-
-            // Reset loading state after all requests are completed
-            setLoading(false);
+            const response = await axios.post('https://mts-aidocprocessing-case.olymp.innopolis.university/generate', testData);
+            console.log(`Response for:`, response.data);
+            economicStore.addLiquidityData(response.data);
         } catch (error) {
-            console.error('Error processing financial reports:', error);
+            console.error("Error sending request:", error);
+        } finally {
+            setLoading(false);
+            if (wasChatOpen) {
+                chatStore.handleOpenChat();
+            }
         }
         navigate('/economicData');
-        // try {
-        //     const response = await axios.post('/api/report', data, {
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     });
-        //     console.log("Response:", response.data);
-        // } catch (error) {
-        //     console.error("Error sending request:", error);
-        // } finally {
-        //     setLoading(false);
-        //     if (wasChatOpen) {
-        //         chatStore.handleOpenChat();
-        //     }
-        // }
     }
 
     return (
