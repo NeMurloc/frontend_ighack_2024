@@ -1,0 +1,44 @@
+{
+    "title": "Ликвидность",
+    "metrics": [
+        {
+            "name": "Коэффициент текущей ликвидности ",
+            "value": 0.1
+        },
+        {
+            "name": "Коэффициент быстрой ликвидности ",
+            "value": 0.1
+        },
+        {
+            "name": "Коэффициент абсолютной ликвидности",
+            "value": 0.1
+        }
+    ],
+    "graphs": [
+        {
+            "name": "График коэффициентов ликвидности по кварталам",
+            "type": "histogram",
+            "values": [
+                {
+                    "period": "Q1 2020",
+                    "current_liquidity": 0.3,
+                    "fast_liquidity": 0.1,
+                    "absolute_liquidity": 0.1
+                },
+                {
+                    "period": "Q2 2020",
+                    "current_liquidity": 0.2,
+                    "fast_liquidity": 0.3,
+                    "absolute_liquidity": 0.1
+                },
+                {
+                    "period": "Q3 2020",
+                    "current_liquidity": 0.32,
+                    "fast_liquidity": 0.23,
+                    "absolute_liquidity": 0.1
+                }
+            ]
+        }
+    ],
+    "conclusion": "Здесь будет твой вывод"
+}
