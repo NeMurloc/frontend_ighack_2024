@@ -33,7 +33,6 @@ const ReportConfiguration: React.FC = () => {
     const navigate = useNavigate();
 
     const handleSendRequestClick = async () => {
-        navigate('/economicData');
         const wasChatOpen = chatStore.isOpen;
 
         if (wasChatOpen) {
@@ -81,7 +80,7 @@ const ReportConfiguration: React.FC = () => {
         } catch (error) {
             console.error('Error processing financial reports:', error);
         }
-
+        navigate('/economicData');
         // try {
         //     const response = await axios.post('/api/report', data, {
         //         headers: {
