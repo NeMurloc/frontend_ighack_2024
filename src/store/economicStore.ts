@@ -1,40 +1,40 @@
 import { makeAutoObservable } from 'mobx';
 
-// Определение интерфейсов
+// Определение интерфейсов для структурирования данных
 interface Metric {
-    name: string;
-    value: number;
+    name: string; // Название метрики
+    value: number; // Значение метрики
 }
 
 interface GraphValue {
-    period: string;
-    [key: string]: number | string;
+    period: string; // Период времени
+    [key: string]: number | string; // Дополнительные значения по ключам
 }
 
 interface Graph {
-    name: string;
-    type: string;
-    values: GraphValue[];
+    name: string; // Название графика
+    type: string; // Тип графика (например, линейный, столбчатый)
+    values: GraphValue[]; // Массив значений для графика
 }
 
 interface EconomicData {
-    title: string;
-    metrics: Metric[];
-    graphs: Graph[];
-    conclusion: string;
+    title: string; // Заголовок экономических данных
+    metrics: Metric[]; // Массив метрик
+    graphs: Graph[]; // Массив графиков
+    conclusion: string; // Заключение по экономическим данным
 }
 
-// Определение класса хранилища
+// Определение класса хранилища для управления экономическими данными
 class EconomicStore {
-    economicData: EconomicData[] = [];
+    economicData: EconomicData[] = []; // Изначально пустой массив экономических данных
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this); // Делает свойства наблюдаемыми и методы действиями
     }
 
-    // Метод для добавления нового объекта в массив
+    // Метод для добавления нового объекта экономических данных в массив
     addLiquidityData(newData: EconomicData) {
-        this.economicData.push(newData);
+        this.economicData.push(newData); // Добавление новых данных в массив
     }
 }
 

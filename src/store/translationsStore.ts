@@ -1,9 +1,11 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 class TranslationsStore {
+    // Хранит переводы в виде ключ-значение
     translations: { [key: string]: string };
 
     constructor() {
+        // Инициализация объекта с переводами
         this.translations = {
             current_liquidity: "Текущая ликвидность",
             fast_liquidity: "Быстрая ликвидность",
@@ -24,8 +26,9 @@ class TranslationsStore {
             net_profit: "Чистая прибыль",
         };
 
+        // Делаем свойства наблюдаемыми
         makeObservable(this, {
-            translations: observable,
+            translations: observable, // Переводы будут наблюдаемыми
         });
     }
 }
