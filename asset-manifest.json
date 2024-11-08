@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/frontend_ighack_2024/static/css/main.da3c3a1a.css",
+    "main.js": "/frontend_ighack_2024/static/js/main.72be2d4b.js",
+    "static/media/loading.gif": "/frontend_ighack_2024/static/media/loading.f60cb1339ba610c65558.gif",
+    "static/media/select.svg": "/frontend_ighack_2024/static/media/select.b14e63d324fe363e6eeece6023ec5a21.svg",
+    "static/media/background.svg": "/frontend_ighack_2024/static/media/background.bafa373867f8232956eb.svg",
+    "index.html": "/frontend_ighack_2024/index.html",
+    "static/media/choosenCheckbox.svg": "/frontend_ighack_2024/static/media/choosenCheckbox.7d1f306c9f01fead66f61b35a9e8459b.svg",
+    "static/media/emptyCheckbox.svg": "/frontend_ighack_2024/static/media/emptyCheckbox.dd99df1fded1fcd254d2f3959b1ddc5f.svg",
+    "main.da3c3a1a.css.map": "/frontend_ighack_2024/static/css/main.da3c3a1a.css.map",
+    "main.72be2d4b.js.map": "/frontend_ighack_2024/static/js/main.72be2d4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.da3c3a1a.css",
+    "static/js/main.72be2d4b.js"
+  ]
+}
